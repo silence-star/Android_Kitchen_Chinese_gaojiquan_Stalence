@@ -31,6 +31,28 @@ do
   echo "- update-script 刷机脚本是 'Amend' 格式"
   echo "- updater-script 刷机脚本是 'Edify' 格式"
   echo
+
+  default_choice=""
+  
+  cd WORKING_*
+  if [ -e META-INF/com/google/android/updater-script ]
+  then
+    echo "你目前有的是:"
+    echo "META-INF/com/google/android/updater-script"
+    echo
+    default_choice=1
+  elif [ -e META-INF/com/google/android/update-script ]
+  then
+    echo "你目前有的是:"
+    echo "META-INF/com/google/android/update-script"
+    echo
+    default_choice=2
+  else
+    echo "你的工作文件夹中不存在任何刷机脚本。"
+  fi
+
+  cd ..
+
   echo
   echo "选项:"
   echo 
@@ -39,9 +61,26 @@ do
   echo "  2 = 转换 update-script 为 updater-script (Edify)"
   echo "  0 = 退出"
   echo
-  echo -n "请输入选择项："
+
+  if [ "$default_choice" == "" ]
+  then
+    echo -n "请输入选择项："
+  else
+    echo -n "(默认: $default_choice)? "
+  fi
 
   read enterNumber
+
+  if [ "$enterNumber" != "0" ] &&  [ "$enterNumber" != "1" ] &&  [ "$enterNumber" != "2" ] 
+  then
+    if [ "$default_choice" == "" ]
+    then
+      echo "无效选项"
+      continue
+    else
+      enterNumber=$default_choice
+    fi
+  fi
 
   if [ "$enterNumber" == "1" ]
   then
@@ -52,9 +91,6 @@ do
   elif [ "$enterNumber" == "0" ]
   then
     exit 0
-  else 
-    echo "错误选项"
-    continue
   fi
 
   scripts/press_enter

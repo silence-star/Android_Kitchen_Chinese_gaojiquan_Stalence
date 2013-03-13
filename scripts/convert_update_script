@@ -767,8 +767,9 @@ sed -i -e '/^$/d' updater-script
 
 test_mnt=`grep "^mount(" updater-script`
 test_mnt2=`grep "sbin/mount\", \"" updater-script`
+test_mnt3=`grep "boot.img\"" updater-script | grep dev`
 
-if [ "$test_mnt" != "" ] || [ "$test_mnt2" != "" ]
+if [ "$test_mnt" != "" ] || [ "$test_mnt2" != "" ] || [ "$test_mnt3" != "" ]
 then
   echo 
   echo
@@ -777,13 +778,19 @@ then
 
   if [ "$test_mnt" != "" ]
   then
-    grep "^mount(" updater-script
+    echo $test_mnt
   fi
 
   if [ "$test_mnt2" != "" ]
-  then 
-    grep "sbin/mount\", \"" updater-script
+  then
+    echo $test_mnt2
   fi
+
+  if [ "$test_mnt3" != "" ]
+  then
+    echo $test_mnt3
+  fi
+
 
   echo "--------------------------------------------------------------------------"
 fi

@@ -40,6 +40,14 @@ echo
 echo -n "请稍后"
 
 #
+# Get version of kitchen
+#
+
+echo -n "."
+kitchen_ver=`scripts/get_kitchen_ver`
+
+
+#
 # Check if Samsung Galaxy S/S2
 #
 
@@ -458,7 +466,7 @@ fi
 clear
 
 echo
-echo "工作文件夹信息"
+echo "工作文件夹信息 (v$kitchen_ver)"
 echo
 echo " Android OS 版本                : $android_os"
 echo " 设备                           : $device_name"
